@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Nlayss</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            font-family: 'Arial Black', sans-serif;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Вращающаяся черная дыра строго по центру */
+        .black-hole {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            /* Смещаем центр трансформации в центр блока */
+            transform: translate(-50%, -50%);
+            background: conic-gradient(from 0deg, red, yellow, lime, aqua, blue, magenta, red);
+            /* Анимация вращения на GPU */
+            animation: spin 10s linear infinite;
+            will-change: transform;
+            border-radius: 50%;
+            opacity: 0.9;
+            /* Маска, чтобы снизу была "дыра" */
+            -webkit-mask: radial-gradient(circle at center, transparent 0%, black 70%);
+            mask: radial-gradient(circle at center, transparent 0%, black 70%);
+        }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Контейнер для контента поверх воронки */
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            text-align: center;
+        }
+
+        /* Радужная переливающаяся надпись сверху */
+        .title {
+            margin-top: 20px;
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            background: conic-gradient(from 0deg, red, yellow, lime, aqua, blue, magenta, red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            animation: hueShift 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes hueShift {
+            from { filter: hue-rotate(0deg); }
+            to { filter: hue-rotate(360deg); }
+        }
+
+        /* Кнопка-вкладка Minecraft по центру */
+        .main-tab {
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: #1a1a1a;
+            color: #00ff00;
+            border: 3px solid #00ff00;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .main-tab:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 30px #00ff00;
+        }
+
+        /* Блок с версиями (скрыт по умолчанию) */
+        .versions {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .version-link {
+            display: block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: #222;
+            color: #00ccff;
+            border: 2px solid #00ccff;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .version-link:hover {
+            background: #00ccff;
+            color: #000;
+            box-shadow: 0 0 20px #00ccff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Черная дыра в центре экрана -->
+    <div class="black-hole"></div>
+
+    <!-- Весь текстовый и кнопочный контент -->
+    <div class="content">
+        <h1 class="title">Nlayss</h1>
+
+        <button class="main-tab" id="minecraftBtn">Minecraft</button>
+
+        <div id="versionsBlock" class="versions">
+            <a href="files/Catlean_1.21.11.jar" class="version-link" download>Catlean 1.21.11</a>
+            <a href="files/Delta_1.21.11.jar" class="version-link" download>Delta 1.21.11</a>
+            <a href="files/Nursulktan_1.21.11.jar" class="version-link" download>Nursulktan 1.21.11</a>
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('minecraftBtn');
+        const block = document.getElementById('versionsBlock');
+
+        btn.addEventListener('click', () => {
+            if (block.style.display === 'flex') {
+                block.style.display = 'none';
+            } else {
+                block.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
